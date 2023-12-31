@@ -1,4 +1,7 @@
+![](https://raw.githubusercontent.com/RPDJF/42-Repos/main/cursus/push_swap_score.png)
 ![](https://github.com/ayogun/42-project-badges/blob/main/badges/push_swape.png?raw=true)
+
+Have to fix the bonuses yet
 
 ![](https://img.shields.io/github/languages/code-size/rpdjf/42-pushswap?color=5BCFFF)
 
