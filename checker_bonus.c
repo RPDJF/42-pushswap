@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 22:30:44 by rude-jes          #+#    #+#             */
-/*   Updated: 2024/01/01 01:07:14 by rude-jes         ###   ########.fr       */
+/*   Updated: 2024/01/01 20:57:34 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	checker(t_stacks *stacks)
 				|| !ft_strncmp(op, "rb", size) || !ft_strncmp(op, "rr", size)
 				|| !ft_strncmp(op, "rra", size) || !ft_strncmp(op, "rrb", size)
 				|| !ft_strncmp(op, "rrr", size) || !ft_strncmp(op, "pa", size)
-				|| !ft_strncmp(op, "pb", size)))
+				|| !ft_strncmp(op, "pb", size)) || !size)
 			secure_exit(stacks, "Error");
 		handler(op, stacks);
 		str = ft_get_next_line(0);
