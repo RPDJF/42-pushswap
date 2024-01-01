@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:30:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/08 20:50:11 by rude-jes         ###   ########.fr       */
+/*   Updated: 2024/01/01 22:55:27 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,32 +48,29 @@ void	go_to(t_stacks *stacks, int move_a, int move_b)
 		handler("rb", stacks);
 }
 
+int	ft_nbhighest(int a, int b)
+{
+	if (a >= b)
+		return (a);
+	return (b);
+}
+
 int	sim_go_to(t_stacks *stacks, int move_a, int move_b)
 {
-	int	count;
+	int	limit_a;
+	int	limit_b;
 
-	count = -2;
-	while (count++, (!(move_a > (stacks->size_a / 2))
-			&& !(move_b > (stacks->size_b / 2))) && (move_a && move_b))
-	{
-		move_a--;
-		move_b--;
-	}
-	while (count++, move_a > stacks->size_a / 2 && move_b > stacks->size_b / 2
-		&& move_a < stacks->size_a && move_b < stacks->size_b)
-	{
-		move_a++;
-		move_b++;
-	}
-	while (move_a > (stacks->size_a / 2) && move_a++ < stacks->size_a)
-		count++;
-	while (!(move_a > (stacks->size_a / 2)) && move_a--)
-		count++;
-	while (move_b > (stacks->size_b / 2) && move_b++ < stacks->size_b)
-		count++;
-	while (!(move_b > (stacks->size_b / 2)) && move_b--)
-		count++;
-	return (count);
+	limit_a = stacks->size_a / 2 + stacks->size_a % 2;
+	limit_b = stacks->size_b / 2 + stacks->size_b % 2;
+	if (move_a < limit_a && move_b < limit_b)
+		return (ft_nbhighest(move_a, move_b));
+	else if (move_a >= limit_a && move_b >= limit_b)
+		return (ft_nbhighest(stacks->size_a - move_a, stacks->size_b - move_b));
+	else if (move_a >= limit_a)
+		return (stacks->size_a - move_a + move_b);
+	else if (move_b >= limit_b)
+		return (move_a + stacks->size_b - move_b);
+	return (0);
 }
 
 void	turc_move(t_stacks *stacks)
@@ -83,9 +80,12 @@ void	turc_move(t_stacks *stacks)
 	int	current_cost;
 	int	tmp[2];
 
-	i = 0;
-	while (i < stacks->size_a)
+	current_cost = __INT_MAX__;
+	i = -1;
+	while (i++, i < stacks->size_a)
 	{
+		if(i >= current_cost && i + current_cost <= stacks->size_a )
+			continue;
 		tmp[0] = getnear(*stacks, 'b', *ft_lstget(stacks->a, i));
 		tmp[1] = sim_go_to(stacks, i, tmp[0]);
 		if (!i || tmp[1] < current_cost)
@@ -96,7 +96,6 @@ void	turc_move(t_stacks *stacks)
 		}
 		if (current_cost <= 1)
 			break ;
-		i++;
 	}
 	go_to(stacks, moveset[0], moveset[1]);
 }
