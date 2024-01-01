@@ -6,16 +6,16 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:47:50 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/09 12:02:49 by rude-jes         ###   ########.fr       */
+/*   Updated: 2024/01/01 01:16:51 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../checker_bonus.h"
 
-void	pushb_handler(t_stacks *stacks, t_list *src)
+int	pushb_handler(t_stacks *stacks, t_list *src)
 {
 	if (stacks->size_a <= 0)
-		secure_exit(stacks, "KO");
+		return (-1);
 	stacks->size_a--;
 	stacks->size_b++;
 	if (!stacks->most_a || stacks->most_a == src)
@@ -30,12 +30,13 @@ void	pushb_handler(t_stacks *stacks, t_list *src)
 		stacks->least_b = src;
 	if (!stacks->last_b)
 		stacks->last_b = src;
+	return (0);
 }
 
-void	pusha_handler(t_stacks *stacks, t_list *src)
+int	pusha_handler(t_stacks *stacks, t_list *src)
 {
 	if (stacks->size_b <= 0)
-		secure_exit(stacks, "KO");
+		return (-1);
 	stacks->size_a++;
 	stacks->size_b--;
 	if (!stacks->most_b || stacks->most_b == src)
@@ -48,6 +49,7 @@ void	pusha_handler(t_stacks *stacks, t_list *src)
 	else if (!stacks->least_a
 		|| *((int *)src->content) < *((int *)stacks->least_a->content))
 		stacks->least_a = src;
+	return (0);
 }
 
 void	rotate_handler(char stack, t_stacks *stacks, t_list **src, t_list **dst)
@@ -69,7 +71,9 @@ void	simple_handler(char	*operation, t_stacks *stacks)
 {
 	t_list	**src;
 	t_list	**dst;
+	int		isvalid;
 
+	isvalid = 0;
 	src = &stacks->a;
 	dst = &stacks->b;
 	if (operation[1] == 'b')
@@ -81,10 +85,11 @@ void	simple_handler(char	*operation, t_stacks *stacks)
 	else if (operation[0] == 'p')
 	{
 		if (operation[1] == 'a')
-			pusha_handler(stacks, *dst);
+			isvalid = pusha_handler(stacks, *dst);
 		else
-			pushb_handler(stacks, *dst);
-		push_stack(dst, src);
+			isvalid = pushb_handler(stacks, *dst);
+		if (isvalid >= 0)
+			push_stack(dst, src);
 	}
 	else if (operation[0] == 'r')
 		rotate_handler(operation[1], stacks, src, dst);

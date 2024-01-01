@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 22:30:44 by rude-jes          #+#    #+#             */
-/*   Updated: 2023/11/08 22:30:44 by rude-jes         ###   ########.fr       */
+/*   Updated: 2024/01/01 01:07:14 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int	main(int argc, char **argv)
 	if (!check_duplicates(stacks->a))
 		secure_exit(stacks, "Error");
 	checker(stacks);
-	if (!stacks->size_b && !check_stackorder(*stacks, "a"))
+	if (stacks->size_b || !check_stackorder(*stacks, "a"))
 		secure_exit(stacks, "KO");
 	ft_putendl_fd("OK", 1);
 	secure_exit(stacks, 0);
