@@ -6,7 +6,7 @@
 /*   By: rude-jes <ruipaulo.unify@outlook.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:30:52 by rude-jes          #+#    #+#             */
-/*   Updated: 2024/01/01 22:55:27 by rude-jes         ###   ########.fr       */
+/*   Updated: 2024/01/02 14:52:43 by rude-jes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	turc_move(t_stacks *stacks)
 	i = -1;
 	while (i++, i < stacks->size_a)
 	{
-		if(i >= current_cost && i + current_cost <= stacks->size_a )
-			continue;
+		if (i >= current_cost && i + current_cost <= stacks->size_a)
+			continue ;
 		tmp[0] = getnear(*stacks, 'b', *ft_lstget(stacks->a, i));
 		tmp[1] = sim_go_to(stacks, i, tmp[0]);
 		if (!i || tmp[1] < current_cost)
